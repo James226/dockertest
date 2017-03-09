@@ -1,0 +1,12 @@
+version: '2.1'
+
+services:
+  dockertest:
+    image: dockertest
+    build:
+      context: ./dockertest
+      dockerfile: Dockerfile
+networks:
+  default:
+    external:
+      name: nat
