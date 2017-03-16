@@ -1,4 +1,4 @@
-#!/user/bin/env bash
+#!/usr/bin/env bash
 dotnet restore dockertest.sln
 dotnet build -c Release dockertest/dockertest.csproj
 dotnet publish -c Release -o obj/Docker/publish dockertest/dockertest.csproj
