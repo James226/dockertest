@@ -13,7 +13,7 @@ build_script:
 
     dotnet build -c Release
 
-    dotnet publish -c Release -o obj/Docker/publish
+    appveyor-retry dotnet publish -c Release -o obj/Docker/publish
 
     aws ecr get-login --region eu-west-1 | Invoke-Expression
 
