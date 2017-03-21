@@ -11,4 +11,4 @@ build_script:
 
     aws ecr get-login --region eu-west-1 | Invoke-Expression
 
-    Write-Host "Deploy version ${env:deploy_build_number} to ${env:environment}"
+    Write-Host "Deploy version ${env:appveyor_build_number} to ${env:environment}"
