@@ -13,5 +13,5 @@ build_script:
     docker pull 691267057566.dkr.ecr.eu-west-1.amazonaws.com/james226/dockertest:$env:APPVEYOR_BUILD_NUMBER
     docker tag 691267057566.dkr.ecr.eu-west-1.amazonaws.com/james226/dockertest:$env:APPVEYOR_BUILD_NUMBER 691267057566.dkr.ecr.eu-west-1.amazonaws.com/james226/dockertest:$env:environment
     docker push 691267057566.dkr.ecr.eu-west-1.amazonaws.com/james226/dockertest:$env:environment
-    aws ecs register-task-definition --cli-input-json file://dockertest-task-definition.json
+    aws ecs register-task-definition --region eu-west-1 --cli-input-json file://dockertest-task-definition.json
     aws ecs update-service --region eu-west-1 --cluster windows --service dockertest --task-definition dockertest-dev
