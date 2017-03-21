@@ -1,0 +1,14 @@
+version: 1.0.{build}
+image: Visual Studio 2017
+environment:
+  AWS_ACCESS_KEY_ID:
+    secure: kDqp6sG9BKz2GSKdVeS1VUy/f7b/17ooP3n5tqSTY3E=
+  AWS_SECRET_ACCESS_KEY:
+    secure: 9LBGCZuz7N9tlIxDQFYa33OOeM6rMG5tY3UzroniBLq4lvOYbFbh0T97sjuGM5WO
+build_script:
+- ps: >-
+    pip install --upgrade awscli
+
+    aws ecr get-login --region eu-west-1 | Invoke-Expression
+
+    Write-Host "Deploy"
