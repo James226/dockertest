@@ -1,0 +1,20 @@
+{
+    "containerDefinitions": [
+        {
+            "name": "dockertest",
+            "image": "691267057566.dkr.ecr.eu-west-1.amazonaws.com/james226/dockertest:dev",
+            "memory": 128,
+            "essential": true,
+            "portMappings": [
+                {
+                    "hostPort": 5000,
+                    "containerPort": 5000,
+                    "protocol": "tcp"
+                }
+            ]
+        }
+    ],
+    "volumes": [],
+    "placementConstraints": [],
+    "family": "dockertest-dev"
+}
