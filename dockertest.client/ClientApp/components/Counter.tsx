@@ -8,16 +8,17 @@ import * as WeatherForecasts from '../store/WeatherForecasts';
 type CounterProps = CounterStore.CounterState & typeof CounterStore.actionCreators;
 
 class Counter extends React.Component<CounterProps, void> {
-    public render() {
-        return <div>
-            <h1>Counter</h1>
+    render() {
+        return (<div>
+                    <h1>Counter</h1>
 
-            <p>This is a simple example of a React component.</p>
+                    <p>This is a simple example of a React component.</p>
 
-            <p>Current count: <strong>{ this.props.count }</strong></p>
+                    <p>Current count: <strong>{ this.props.count }</strong>
+                    </p>
 
-            <button onClick={ () => { this.props.increment() } }>Increment</button>
-        </div>;
+                    <button onClick={() => { this.props.increment() } }>Increment</button>
+                </div>);
     }
 }
 

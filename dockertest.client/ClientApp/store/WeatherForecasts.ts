@@ -1,6 +1,6 @@
 import { fetch, addTask } from 'domain-task';
 import { Action, Reducer, ActionCreator } from 'redux';
-import { AppThunkAction } from './';
+import { AppThunkAction } from './index';
 
 // -----------------
 // STATE - This defines the type of data maintained in the Redux store.
@@ -30,7 +30,7 @@ interface RequestWeatherForecastsAction {
 interface ReceiveWeatherForecastsAction {
     type: 'RECEIVE_WEATHER_FORECASTS',
     startDateIndex: number;
-    forecasts: WeatherForecast[]
+    forecasts: WeatherForecast[];
 }
 
 // Declare a 'discriminated union' type. This guarantees that all references to 'type' properties contain one of the
@@ -44,12 +44,16 @@ type KnownAction = RequestWeatherForecastsAction | ReceiveWeatherForecastsAction
 export const actionCreators = {
     requestWeatherForecasts: (startDateIndex: number): AppThunkAction<KnownAction> => (dispatch, getState) => {
         // Only load data if it's something we don't already have (and are not already loading)
+        console.log('Load Values');
+        fetch('/api/Values').then(r => r.json()).then(r => console.log(r));
+
         if (startDateIndex !== getState().weatherForecasts.startDateIndex) {
             let fetchTask = fetch(`/api/SampleData/WeatherForecasts?startDateIndex=${ startDateIndex }`)
                 .then(response => response.json() as Promise<WeatherForecast[]>)
                 .then(data => {
                     dispatch({ type: 'RECEIVE_WEATHER_FORECASTS', startDateIndex: startDateIndex, forecasts: data });
                 });
+
 
             addTask(fetchTask); // Ensure server-side prerendering waits for this to complete
             dispatch({ type: 'REQUEST_WEATHER_FORECASTS', startDateIndex: startDateIndex });
@@ -65,11 +69,10 @@ const unloadedState: WeatherForecastsState = { startDateIndex: null, forecasts: 
 export const reducer: Reducer<WeatherForecastsState> = (state: WeatherForecastsState, action: KnownAction) => {
     switch (action.type) {
         case 'REQUEST_WEATHER_FORECASTS':
-            return {
+            return Object.assign({}, state, {
                 startDateIndex: action.startDateIndex,
-                forecasts: state.forecasts,
                 isLoading: true
-            };
+            });
         case 'RECEIVE_WEATHER_FORECASTS':
             // Only accept the incoming data if it matches the most recent request. This ensures we correctly
             // handle out-of-order responses.

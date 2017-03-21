@@ -28,6 +28,8 @@ namespace dockertest_client
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<Configuration>(this.Configuration);
+
             // Add framework services.
             services.AddMvc();
         }
@@ -64,5 +66,10 @@ namespace dockertest_client
                     defaults: new { controller = "Home", action = "Index" });
             });
         }
+    }
+
+    public class Configuration
+    {
+        public string ApiBase { get; set; }
     }
 }

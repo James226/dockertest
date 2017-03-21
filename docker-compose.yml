@@ -1,0 +1,17 @@
+version: '2.1'
+
+services:
+  web:
+    build: dockertest.client
+    ports:
+      - "5000:5000"
+    ##volumes:
+      ## - $PWD\dockertest.client:C:\app
+
+  api:
+    build: dockertest
+
+networks:
+  default:
+    external:
+      name: nat

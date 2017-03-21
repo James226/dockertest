@@ -23,7 +23,7 @@ class FetchData extends React.Component<WeatherForecastProps, void> {
         this.props.requestWeatherForecasts(startDateIndex);
     }
 
-    public render() {
+    render() {
         return <div>
             <h1>Weather forecast</h1>
             <p>This component demonstrates fetching data from the server and working with URL parameters.</p>
@@ -33,7 +33,7 @@ class FetchData extends React.Component<WeatherForecastProps, void> {
     }
 
     private renderForecastsTable() {
-        return <table className='table'>
+        return <table className="table">
             <thead>
                 <tr>
                     <th>Date</th>
@@ -56,12 +56,12 @@ class FetchData extends React.Component<WeatherForecastProps, void> {
     }
 
     private renderPagination() {
-        let prevStartDateIndex = this.props.startDateIndex - 5;
-        let nextStartDateIndex = this.props.startDateIndex + 5;
+        const prevStartDateIndex = this.props.startDateIndex - 5;
+        const nextStartDateIndex = this.props.startDateIndex + 5;
 
-        return <p className='clearfix text-center'>
-            <Link className='btn btn-default pull-left' to={ `/fetchdata/${ prevStartDateIndex }` }>Previous</Link>
-            <Link className='btn btn-default pull-right' to={ `/fetchdata/${ nextStartDateIndex }` }>Next</Link>
+        return <p className="clearfix text-center">
+            <Link className="btn btn-default pull-left" to={ `/fetchdata/${ prevStartDateIndex }` }>Previous</Link>
+            <Link className="btn btn-default pull-right" to={ `/fetchdata/${ nextStartDateIndex }` }>Next</Link>
             { this.props.isLoading ? <span>Loading...</span> : [] }
         </p>;
     }
