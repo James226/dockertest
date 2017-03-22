@@ -14,4 +14,9 @@ build_script:
     $taskdefn = [Regex]::Replace($taskdefn, "{{(\w+)}}", { [environment]::GetEnvironmentVariable($args[0].Groups[1]) })
     Set-Content dockertest-task-definition.json $taskdefn
     aws ecs register-task-definition --region eu-west-1 --cli-input-json file://dockertest-task-definition.json
-    aws ecs update-service --region eu-west-1 --cluster windows --service dockertest --task-definition dockertest-$env:environment
+    $services = aws ecs describe-services --region eu-west-1 --cluster windows --service dockertest | ConvertFrom-Json
+    if ($services.services.length -gt 0 -And $services.services[0].status -eq "ACTIVE") {
+      aws ecs update-service --region eu-west-1 --cluster windows --service dockertest --task-definition dockertest-$env:environment
+    } else {
+      aws ecs create-service --region eu-west-1 --cli-input-json file://dockertest-service.json
+    }
