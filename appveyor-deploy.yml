@@ -8,10 +8,10 @@ environment:
 build_script:
 - ps: |-
     pip install --upgrade awscli
-    aws ecr get-login --region eu-west-1 | Invoke-Expression
     Write-Host "Deploy version ${env:appveyor_build_number} to ${env:environment}"
-    docker pull 691267057566.dkr.ecr.eu-west-1.amazonaws.com/james226/dockertest:$env:APPVEYOR_BUILD_NUMBER
-    docker tag 691267057566.dkr.ecr.eu-west-1.amazonaws.com/james226/dockertest:$env:APPVEYOR_BUILD_NUMBER 691267057566.dkr.ecr.eu-west-1.amazonaws.com/james226/dockertest:$env:environment
-    docker push 691267057566.dkr.ecr.eu-west-1.amazonaws.com/james226/dockertest:$env:environment
+    $env:build_number = $env:appveyor_build_number
+    $taskdefn = Get-Content dockertest-task-definition.json
+    $taskdefn = [Regex]::Replace($taskdefn, "{{(\w+)}}", { [environment]::GetEnvironmentVariable($args[0].Groups[1]) })
+    Set-Content dockertest-task-definition.json $taskdefn
     aws ecs register-task-definition --region eu-west-1 --cli-input-json file://dockertest-task-definition.json
-    aws ecs update-service --region eu-west-1 --cluster windows --service dockertest --task-definition dockertest-dev
+    aws ecs update-service --region eu-west-1 --cluster windows --service dockertest --task-definition dockertest-$env:environment

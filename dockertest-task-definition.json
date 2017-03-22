@@ -2,7 +2,7 @@
     "containerDefinitions": [
         {
             "name": "dockertest",
-            "image": "691267057566.dkr.ecr.eu-west-1.amazonaws.com/james226/dockertest:dev",
+            "image": "691267057566.dkr.ecr.eu-west-1.amazonaws.com/james226/dockertest:{{build_number}}",
             "memory": 128,
             "essential": true,
             "portMappings": [
@@ -16,5 +16,5 @@
     ],
     "volumes": [],
     "placementConstraints": [],
-    "family": "dockertest-dev"
+    "family": "dockertest-{{environment}}"
 }
