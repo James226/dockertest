@@ -3,13 +3,7 @@
     "serviceName": "dockertest",
     "desiredCount": 1,
     "taskDefinition": "dockertest-dev",
-    "role": "arn:aws:iam::691267057566:role/ecsServiceRole",
     "loadBalancers": [
-        {
-            "containerName": "dockertest",
-            "targetGroupArn": "arn:aws:elasticloadbalancing:eu-west-1:691267057566:targetgroup/dockertest-api/89616d839f64d892",
-            "containerPort": 5000
-        }
     ],
     "deploymentConfiguration": {
         "maximumPercent": 200,

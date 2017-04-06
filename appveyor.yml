@@ -2,29 +2,19 @@ version: 1.0.{build}
 image: Visual Studio 2017
 environment:
   AWS_ACCESS_KEY_ID:
-    secure: kDqp6sG9BKz2GSKdVeS1VUy/f7b/17ooP3n5tqSTY3E=
+    secure: nDui/gZw7PVeswl4C1fLR2xJ2MIVfcCij1meh5j7PIg=
   AWS_SECRET_ACCESS_KEY:
-    secure: 9LBGCZuz7N9tlIxDQFYa33OOeM6rMG5tY3UzroniBLq4lvOYbFbh0T97sjuGM5WO
+    secure: NsiqNJNkIdbowpZcCmdv7tkgMj3BH7r5cU/7ZRgKVrGISpHLmUuRiXdKeGIXtn30
 build_script:
-- ps: >-
+- ps: |-
     pip install --upgrade awscli
-
     dotnet restore
-
     dotnet build -c Release
-
     appveyor-retry dotnet publish -c Release -o obj/Docker/publish
-
     aws ecr get-login --region eu-west-1 | Invoke-Expression
-
     docker build -t james226/dockertest:$env:APPVEYOR_BUILD_NUMBER dockertest
-
-    docker tag james226/dockertest:$env:APPVEYOR_BUILD_NUMBER 691267057566.dkr.ecr.eu-west-1.amazonaws.com/james226/dockertest:$env:APPVEYOR_BUILD_NUMBER
-
-    docker push 691267057566.dkr.ecr.eu-west-1.amazonaws.com/james226/dockertest:$env:APPVEYOR_BUILD_NUMBER
-
+    docker tag james226/dockertest:$env:APPVEYOR_BUILD_NUMBER 108652351904.dkr.ecr.eu-west-1.amazonaws.com/dockertest:$env:APPVEYOR_BUILD_NUMBER
+    docker push 108652351904.dkr.ecr.eu-west-1.amazonaws.com/dockertest:$env:APPVEYOR_BUILD_NUMBER
     docker build -t james226/dockertest_client:$env:APPVEYOR_BUILD_NUMBER dockertest.client
-
-    docker tag james226/dockertest_client:$env:APPVEYOR_BUILD_NUMBER 691267057566.dkr.ecr.eu-west-1.amazonaws.com/james226/dockertest_client:$env:APPVEYOR_BUILD_NUMBER
-
-    docker push 691267057566.dkr.ecr.eu-west-1.amazonaws.com/james226/dockertest_client:$env:APPVEYOR_BUILD_NUMBER
+    docker tag james226/dockertest_client:$env:APPVEYOR_BUILD_NUMBER 108652351904.dkr.ecr.eu-west-1.amazonaws.com/dockertest_client:$env:APPVEYOR_BUILD_NUMBER
+    docker push 108652351904.dkr.ecr.eu-west-1.amazonaws.com/dockertest_client:$env:APPVEYOR_BUILD_NUMBER
