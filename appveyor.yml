@@ -18,3 +18,5 @@ build_script:
     docker build -t james226/dockertest_client:$env:APPVEYOR_BUILD_NUMBER dockertest.client
     docker tag james226/dockertest_client:$env:APPVEYOR_BUILD_NUMBER 108652351904.dkr.ecr.eu-west-1.amazonaws.com/dockertest_client:$env:APPVEYOR_BUILD_NUMBER
     docker push 108652351904.dkr.ecr.eu-west-1.amazonaws.com/dockertest_client:$env:APPVEYOR_BUILD_NUMBER
+on_finish:
+  - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
