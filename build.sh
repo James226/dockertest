@@ -7,3 +7,4 @@ docker build -t james226/dockertest:latest dockertest -f dockertest/Dockerfile.l
 eval $(aws ecr get-login --region eu-west-1)
 docker tag james226/dockertest:latest 108652351904.dkr.ecr.eu-west-1.amazonaws.com/dockertest:$TRAVIS_BUILD_NUMBER-linux
 docker push 108652351904.dkr.ecr.eu-west-1.amazonaws.com/dockertest:$TRAVIS_BUILD_NUMBER-linux
+ 
